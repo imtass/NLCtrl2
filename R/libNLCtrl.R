@@ -152,7 +152,7 @@ doExperiments = function(
       class(ret) = c(class(ret),"AnExptData")
       attr(ret,"paramsSet") = exptsList[[i]]
       
-      saveRDS(ret,paste0(tmp.dir,"/",sprintf("%04d", i),".Rds"))
+      #saveRDS(ret,paste0(tmp.dir,"/",sprintf("%04d", i),".Rds"))
       
       ret
     }
@@ -168,9 +168,9 @@ doExperiments = function(
   cat("All done!\n\n")
   cat("Total: ",formatPeriod(tt[3]),"\n")
   cat("Avg :" ,formatPeriod(round(tt[3]/n.expts,2)),"\n")
-  if(Sys.info()['sysname'] == "Windows"){
-    close(pb)
-  }
+  # if(Sys.info()['sysname'] == "Windows"){
+  #   close(pb)
+  # }
 
   invisible(parLapply(cl, 1:cores, postpro))
   stopCluster(cl)

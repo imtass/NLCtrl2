@@ -26,7 +26,7 @@ getherVariable.ExptRslt = function(x, var.name, condition) {
   })
 
   ret2 = Reduce(cbind, ret) 
-  names(ret2) = names(ret2) %+% "_" %+% 1:ncol(ret2)
+  names(ret2) = paste0(names(ret2), "_",1:ncol(ret2))
   ret2 = as_tibble(ret2)
   #colnames(ret2) = paste(var.name, (1:ncol(ret2)), sep = "_")
   #ret3 = data.frame(ticks = x[[1]][, 1], ret2)
