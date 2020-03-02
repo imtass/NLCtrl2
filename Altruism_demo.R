@@ -97,12 +97,20 @@ print(expt.result)
 altruists = getherVariable(expt.result,"altruists")
 benefit = getherParam(expt.result, "benefit-from-altruism")
 
-df = data.frame(benefit,altruists = t(altruists[nrow(altruists),]))
-
-qplot(benefit,altruists,data=df) + theme_media()
-
+png("altruists.png",units="in", width=6, height=3,res=300)
 qplot(getTicks(altruists), altruists$altruists_20, geom="line") + 
   theme_media() + xlab("ticks") + ylab("altruists") 
+dev.off()
+
+df = data.frame(benefit,altruists = t(altruists[nrow(altruists),]))
+
+
+png("benefit_altruists.png",units="in", width=6, height=3,res=300)
+qplot(benefit,altruists,data=df) + theme_media()+ 
+  theme_media() + xlab("benefit") + ylab("altruists") 
+dev.off()
+
+
 
 
 
