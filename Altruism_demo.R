@@ -91,7 +91,6 @@ expt.result = loadExpt(expt.name,output.dir = output.dir)
 print(expt.result)
 
 
-
 # plot ===================
 
 altruists = getherVariable(expt.result,"altruists")
@@ -102,7 +101,8 @@ qplot(getTicks(altruists), altruists$altruists_20, geom="line") +
   theme_media() + xlab("ticks") + ylab("altruists") 
 dev.off()
 
-df = data.frame(benefit,altruists = t(altruists[nrow(altruists),]))
+df = data.frame(benefit,
+                altruists = t(altruists[nrow(altruists),]))
 
 
 png("benefit_altruists.png",units="in", width=6, height=3,res=300)
