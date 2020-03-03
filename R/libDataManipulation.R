@@ -32,8 +32,8 @@ getherVariable.ExptRslt = function(x, var.name, condition) {
   #ret3 = data.frame(ticks = x[[1]][, 1], ret2)
 
   attr(ret2,"ticks") = x[[1]]$ticks
-  attr(ret2,"mean") = rowMeans(ret2)
-  attr(ret2,"sd") = apply(ret2, 1, sd)
+  #attr(ret2,"mean") = rowMeans(ret2)
+  #attr(ret2,"sd") = apply(ret2, 1, sd)
   attr(ret2,"var.name") = var.name
 
   class(ret2) = c("ExptRslt.Var",class(ret2))

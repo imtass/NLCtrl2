@@ -91,10 +91,8 @@ print.ParamsSet = function(x) {
   print(ret)
 }
 
-getParamsSet = function(x, ...) {
-  UseMethod("getParamsSet", x)
-}
-getParamsSet.AnExptData = function(x) {
+
+getParamsSet = function(x) {
   attr(x, "paramsSet")
 }
 
@@ -107,8 +105,11 @@ getherParam.ExptRslt = function(x,param.name){
   lapply(x,function(y){
     ps = getParamsSet(y)
     unlist(ps[param.name])
-  }) %>% unlist()
+  }) %>% unlist() %>% unname()
 }
+
+
+
 
 
 # print expt oject =============
@@ -159,8 +160,8 @@ getVarByRange = function(exptRslt,var.name,value.range){
 }
 
 # plot var by range of res_percent(5 blocks and 10 blocks)
-range10 = data_frame(from=seq(0,90,10),to=from+10) %>% data.frame()
-range5 = data_frame(from=seq(0,80,20),to=from+20) %>% data.frame()
+range10 = tibble(from=seq(0,90,10),to=from+10) %>% data.frame()
+range5 = tibble(from=seq(0,80,20),to=from+20) %>% data.frame()
 
 # plot10_5 = function(exptRslt,var.name){
 #   var.list.10 = getVarByRange(exptRslt,var.name,range10)

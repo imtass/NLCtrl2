@@ -25,7 +25,8 @@ doExperiments = function(
   cores = detectCores(),
   expt.name = "unnamed",
   output.dir = "output",
-  vars,play.rounds){
+  vars,play.rounds,
+  fast.mode = F){
   
   
   # kill all R process
@@ -135,9 +136,12 @@ doExperiments = function(
   cl <- makeCluster(cores)
   cat("done \n")
   
-  cat("Preparing cores ... ")
-  invisible(parLapply(cl, 1:cores, prepro, nl.path=nl.path, model.path=model.path))
-  cat("done \n")
+  if(fast.mode) {
+    cat("Preparing cores ... ")
+    invisible(parLapply(cl, 1:cores, prepro, nl.path=nl.path, model.path=model.path))
+    cat("done \n")
+  }
+  
   
   cat("Start!\n")
   registerDoSNOW(cl)
@@ -147,13 +151,19 @@ doExperiments = function(
   
   tt = system.time({
     result.par <- foreach(i=1:n.expts, .options.snow=opts) %dopar% {
+      if(!fast.mode){
+        prepro(i, nl.path,  model.path)
+      }
+
       setNLParams(exptsList[[i]])
       ret = goFun(i,vars,play.rounds)
       class(ret) = c(class(ret),"AnExptData")
       attr(ret,"paramsSet") = exptsList[[i]]
       
       #saveRDS(ret,paste0(tmp.dir,"/",sprintf("%04d", i),".Rds"))
-      
+      if(!fast.mode){
+        postpro()
+      }
       ret
     }
   })
@@ -172,7 +182,9 @@ doExperiments = function(
   #   close(pb)
   # }
 
-  invisible(parLapply(cl, 1:cores, postpro))
+  if(fast.mode){
+    invisible(parLapply(cl, 1:cores, postpro))
+  }
   stopCluster(cl)
   
   class(result.par) = c(class(result.par),"ExptRslt")

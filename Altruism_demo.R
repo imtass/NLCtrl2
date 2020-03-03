@@ -45,7 +45,7 @@ goFun = function(x, vars, play.rounds) {
 
 # starts here ===============================
 
-num.expt = 20
+num.expt = 50
 
 # setup params list (for every experiments) ====
 exptsList = list()
@@ -86,6 +86,8 @@ rest = doExperiments(model.path,
 
 print(rest)
 
+
+
 expt.result = loadExpt(expt.name,output.dir = output.dir)
 
 print(expt.result)
@@ -96,19 +98,19 @@ print(expt.result)
 altruists = getherVariable(expt.result,"altruists")
 benefit = getherParam(expt.result, "benefit-from-altruism")
 
-png("altruists.png",units="in", width=6, height=3,res=300)
+#png("altruists.png",units="in", width=6, height=3,res=300)
 qplot(getTicks(altruists), altruists$altruists_20, geom="line") + 
   theme_media() + xlab("ticks") + ylab("altruists") 
-dev.off()
+#dev.off()
 
 df = data.frame(benefit,
                 altruists = t(altruists[nrow(altruists),]))
 
 
-png("benefit_altruists.png",units="in", width=6, height=3,res=300)
+#png("benefit_altruists.png",units="in", width=6, height=3,res=300)
 qplot(benefit,altruists,data=df) + theme_media()+ 
   theme_media() + xlab("benefit") + ylab("altruists") 
-dev.off()
+#dev.off()
 
 
 
